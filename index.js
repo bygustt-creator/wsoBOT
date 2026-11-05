@@ -32,7 +32,17 @@ const {
 // ============================================================================
 // Token do bot. Mantenha este arquivo privado: quem tiver o token controla o bot.
 const TOKEN_DO_BOT = 'MTU2NjQ5NzE3Nzk2NDkwNDUzOA.GLuege.rew7lsizhOWXkaLofE_81e9VARXP2msqXUb47A';
-const TOKEN = TOKEN_DO_BOT || process.env.DISCORD_TOKEN;
+
+/** Remove espaços, aspas e o prefixo "DISCORD_TOKEN=" caso tenham sido colados junto com o token. */
+function limparToken(valor) {
+  return String(valor ?? '')
+    .trim()
+    .replace(/^DISCORD_TOKEN\s*=\s*/i, '')
+    .replace(/^["']|["']$/g, '')
+    .trim();
+}
+
+const TOKEN = limparToken(TOKEN_DO_BOT || process.env.DISCORD_TOKEN);
 const CONFIG_FILE = process.env.CONFIG_PATH || path.join(__dirname, 'config.json');
 const CAPACIDADE_PADRAO = 20;
 const CAPACIDADE_MAXIMA = 100;
@@ -942,7 +952,17 @@ if (require.main === module) {
     console.error('Defina o token em TOKEN_DO_BOT no início do index.js');
     process.exit(1);
   }
-  client.login(TOKEN);
+  client.login(TOKEN).catch((erro) => {
+    if (erro.code === 'TokenInvalid') {
+      console.error(
+        'Token inválido. Gere um novo em Discord Developer Portal > Bot > Reset Token ' +
+          'e atualize TOKEN_DO_BOT (ou a variável DISCORD_TOKEN da hospedagem).',
+      );
+    } else {
+      console.error('Falha ao conectar:', erro);
+    }
+    process.exit(1);
+  });
 }
 
 // Exportado apenas para testes.
@@ -966,4 +986,3 @@ module.exports = {
   modalFreeAgency,
   modalCapacidade,
 };
-
