@@ -31,7 +31,7 @@ const {
 // Constantes
 // ============================================================================
 // Token do bot. Mantenha este arquivo privado: quem tiver o token controla o bot.
-const TOKEN_DO_BOT = 'MTU2NjQ5NzE3Nzk2NDkwNDUzOA.GLuege.rew7lsizhOWXkaLofE_81e9VARXP2msqXUb47A';
+const TOKEN_DO_BOT = 'MTU2NjQ5NzE3Nzk2NDkwNDUzOA.GW9mlK.MeZDJyTVBI1mauhpMad5eL9dqAnzKmQVIQl3Mg';
 
 /** Remove espaços, aspas e o prefixo "DISCORD_TOKEN=" caso tenham sido colados junto com o token. */
 function limparToken(valor) {
