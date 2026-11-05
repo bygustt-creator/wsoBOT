@@ -1,6 +1,10 @@
 'use strict';
 
-require('dotenv').config();
+try {
+  require('dotenv').config();
+} catch {
+  /* dotenv é opcional: o token pode ficar neste arquivo */
+}
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -26,7 +30,9 @@ const {
 // ============================================================================
 // Constantes
 // ============================================================================
-const TOKEN = process.env.DISCORD_TOKEN;
+// Token do bot. Mantenha este arquivo privado: quem tiver o token controla o bot.
+const TOKEN_DO_BOT = 'MTU2NjQ5NzE3Nzk2NDkwNDUzOA.GLuege.rew7lsizhOWXkaLofE_81e9VARXP2msqXUb47A';
+const TOKEN = TOKEN_DO_BOT || process.env.DISCORD_TOKEN;
 const CONFIG_FILE = process.env.CONFIG_PATH || path.join(__dirname, 'config.json');
 const CAPACIDADE_PADRAO = 20;
 const CAPACIDADE_MAXIMA = 100;
@@ -933,7 +939,7 @@ process.on('unhandledRejection', (erro) => console.error('Erro não tratado:', e
 
 if (require.main === module) {
   if (!TOKEN) {
-    console.error('Defina DISCORD_TOKEN no arquivo .env');
+    console.error('Defina o token em TOKEN_DO_BOT no início do index.js');
     process.exit(1);
   }
   client.login(TOKEN);
@@ -960,3 +966,4 @@ module.exports = {
   modalFreeAgency,
   modalCapacidade,
 };
+
